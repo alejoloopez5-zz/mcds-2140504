@@ -9,22 +9,41 @@
                     <h4>
                         <i class="fa fa-clipboard-list"></i>
                         @lang('general.title-dashboard') 
+                        | 
+                        <small>
+                            <i class="fas fa-user-edit"></i> Editor
+                        </small>
                     </h4>
                 </div>
 
                 <div class="card-body row">
-                        {{--  --}}
-                        <div class="col-md-4 offset-md-4 mt-5">
+                    <div class="col-md-2"></div>
+                    {{--  --}}
+                        <div class="col-md-4 mt-5">
                         <div class="card">
-                                <img src="{{ asset('imgs/bg-games.svg') }}" width="240px" class="my-2 img-top-card" height="154px">
+                                <img src="{{ asset('imgs/bg-users.svg') }}" width="240px" class="my-2 img-top-card" height="154px">
                                 <div class="card-body">
-                                    <a href="{{ route('games.index') }}" class="btn btn-block btn-larapp">
-                                        <i class="fas fa-gamepad"></i>
-                                        Módulo Juegos
+                                    <a href="{{ url('editor/info') }}" class="btn btn-block btn-larapp">
+                                        <i class="fas fa-user"></i>
+                                        Mis Datos
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        {{--  --}}
+                        <div class="col-md-4 mt-5">
+                        <div class="card">
+                                <img src="{{ asset('imgs/bg-games.svg') }}" width="240px" class="my-2 img-top-card" height="154px">
+                                <div class="card-body">
+                                    <a href="{{ url('editor/games') }}" class="btn btn-block btn-larapp">
+                                        <i class="fas fa-gamepad"></i>
+                                        Mis Juegos
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        {{--  --}}
                 </div>
             </div>
         </div>

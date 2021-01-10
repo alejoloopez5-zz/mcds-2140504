@@ -57,6 +57,21 @@ Route::group(['middleware' => 'admin'], function() {
     ]);
 });
 
+Route::group(['middleware' => 'editor'], function() {
+    // Resources
+    Route::resources([
+        'games'       => 'GameController',
+    ]);
+});
+
+// Dashboard Customer
+Route::put('customer/{id}', 'UserController@customerupd');
+// Dashboard Editor
+Route::get('editor/info', 'UserController@editorinfo');
+Route::put('editor/{id}', 'UserController@editorupd');
+
+Route::get('editor/games', 'GameController@editorgames');
+
 
 Route::get('generate/pdf/users', 'UserController@pdf');
 
@@ -77,5 +92,7 @@ Route::post('games/search', 'GameController@search');
 Route::get('locale/{locale}', 'LocaleController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('category/filter', 'HomeController@filter');
 
 

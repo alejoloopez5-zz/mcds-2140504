@@ -15,8 +15,8 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct()
-    {
-        $this->middleware('auth', ['except' => 'welcome']);
+    {        
+        $this->middleware('auth', ['except' => ['welcome','filter']]);
     }
 
     /**
@@ -48,5 +48,19 @@ class HomeController extends Controller
                               ->with('cats', $cats)
                               ->with('games', $games);
 
+    }
+
+    public function filter(Request $request) {                
+
+        if($request->category_id >=0){
+            $games = Game::where('category_id',$request->category_id)->get();
+            $categories = Category::where('id',$request->category_id)->get();
+        }else{
+            $categories    = Category::all();
+            $games   = Game::all();
+        }
+                
+        return view('filter')->with('games', $games)
+                             ->with('categories', $categories);
     }
 }

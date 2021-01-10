@@ -9,6 +9,10 @@
                     <h4>
                         <i class="fa fa-clipboard-list"></i>
                         @lang('general.title-dashboard') 
+                        | 
+                        <small>
+                            <i class="fas fa-user-ninja"></i> Administrador
+                        </small>
                     </h4>
                 </div>
 

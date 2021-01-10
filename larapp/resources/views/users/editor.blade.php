@@ -1,25 +1,31 @@
 @extends('layouts.app')
 
-@section('content')
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card">
-                <img src="{{ asset('imgs/bg-dashboard.svg') }}" width="300px" class="my-2 img-top-card">
-                <div class="card-header text-center">
-                    <h4>
-                        <i class="fa fa-clipboard-list"></i>
-                        @lang('general.title-dashboard')
-                        | 
-                        <small>
-                            <i class="fas fa-user"></i> Cliente
-                        </small> 
-                    </h4>
-                </div>
+@section('title', 'Editar')
 
-                <div class="card-body row align-content-center align-items-center">
-                        {{--  --}}
-                        <div class="col-md-6 offset-md-3 mt-2">
-                            <form method="POST" action="{{ url('customer/'.$user->id) }}" enctype="multipart/form-data">
+@section('content')
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h1>
+				<i class="fa fa-pen"></i> 
+				Editar Usuario
+			</h1>
+			<hr>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url('home') }}">
+                        <i class="fa fa-clipboard-list"></i>  
+                        Escritorio
+                    </a>
+                </li>
+              </ol>
+            </nav>
+
+            {{-- @foreach ($user as $user) --}}
+            
+            
+
+			<form method="POST" action="{{ url('editor/'.$user->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" value="{{ $user->id }}">
@@ -94,8 +100,8 @@
                                 <div class="custom-file">
                                    <input type="file" class="custom-file-input @error('photo') is-invalid @enderror" id="photo" name="photo" accept="image/*">
                                    <label class="custom-file-label" for="customFile"> 
-                                     <i class="fa fa-upload"></i> 
-                                     Foto
+                                   	 <i class="fa fa-upload"></i> 
+                                   	 Foto
                                    </label>
                                 @error('photo')
                                     <span class="invalid-feedback" role="alert">
@@ -106,15 +112,27 @@
                         </div>
 
                         <div class="form-group">
+                                <select name="active" id="active" class="form-control @error('active') is-invalid @enderror">
+                                    <option value="">Seleccione el Estado...</option>
+                                    <option value="1" @if(old('active', $user->active) == 1) selected @endif>Activo</option>
+                                    <option value="0" @if(old('active', $user->active) == 0) selected @endif>Inactivo</option>
+                                </select>
+
+                                @error('active')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+
+                        <div class="form-group">
                                 <button type="submit" class="btn btn-larapp btn-block text-uppercase">
                                     Editar
                                     <i class="fa fa-save"></i> 
                                 </button>
                         </div>
                     </form>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    {{-- @endforeach     --}}
+		</div>
+	</div>
 @endsection

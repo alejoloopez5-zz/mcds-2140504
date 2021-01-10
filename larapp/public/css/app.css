@@ -10995,3 +10995,10 @@ ul.pagination .page-item .page-link {
   width: 100%;
 }
 
+figure.img-fcard {
+  background-size: cover;
+  height: 194px;
+  margin: 0px;
+  width: 100%;
+}
+

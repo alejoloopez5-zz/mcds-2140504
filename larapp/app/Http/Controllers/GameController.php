@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\GameRequest;
 use App\Exports\GameExport;
 use App\Imports\GameImport;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -35,7 +36,9 @@ class GameController extends Controller
      */
     public function create()
     {
-        $users = User::where('role', 'Admin')->get();
+        $users = User::where('role','Admin')                       
+                       ->orWhere('role','Editor')
+                       ->get();
         $cats  = Category::all();
         return view('games.create')->with('users', $users)
                                    ->with('cats', $cats);
@@ -162,5 +165,10 @@ class GameController extends Controller
         
         $games = Game::names($request->q)->orderBy('id','ASC')->paginate(10);
         return view('games.search')->with('games', $games);
+    }
+
+    public function editorgames(){
+        $games = Game::where('user_id',Auth::user()->id)->paginate(10);
+        return view('games.indexEditor')->with('games', $games);
     }
 }

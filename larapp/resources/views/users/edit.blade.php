@@ -31,6 +31,10 @@
               </ol>
             </nav>
 
+            {{-- @foreach ($user as $user) --}}
+            
+            
+
 			<form method="POST" action="{{ url('users/'.$user->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -138,6 +142,7 @@
                                 </button>
                         </div>
                     </form>
+                    {{-- @endforeach     --}}
 		</div>
 	</div>
 @endsection

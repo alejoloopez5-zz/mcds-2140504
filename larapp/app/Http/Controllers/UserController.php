@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Exports\UserExport;
 use App\Imports\UserImport;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -85,6 +87,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        //dd($user);
         return view('users.edit')->with('user', $user);
     }
 
@@ -148,6 +151,53 @@ class UserController extends Controller
         
         $users = User::names($request->q)->orderBy('id','ASC')->paginate(10);
         return view('users.search')->with('users', $users);
+    }
+
+    public function customerupd(User $user) {
+        return ('hola');
+    }
+    
+    public function editorinfo(){
+                        
+        $user = User::find(Auth::user()->id);
+        return view('users.editor')->with('user',$user);
+                 
+    }
+
+    public function editorupd(Request $request, $id)    
+    {
+        Validator::make($request->all(), [
+            'fullname'  => 'required',
+            'email'     => 'required|email|unique:users,email,'.$request->id,
+            'phone'     => 'required|numeric',
+            'birthdate' => 'required|date',
+            'gender'    => 'required',
+            'address'   => 'required',
+            'photo'     => 'max:1000',
+            // 'password'  => ['min:6', 'confirmed'],
+        ],)->validate();
+
+                
+                $user = User::find($id);
+                $user->fullname  = $request->fullname;
+                $user->email     = $request->email;
+                $user->phone     = $request->phone;
+                $user->birthdate = $request->birthdate;
+                $user->gender    = $request->gender;
+                $user->address   = $request->address;
+                if ($request->hasFile('photo')) {
+                    $file = time().'.'.$request->photo->extension();
+                    $request->photo->move(public_path('imgs'), $file);
+                    $user->photo = 'imgs/'.$file;
+                }
+        
+                if($request->password){
+                    $user->password   = $request->password;
+                }
+        
+                if($user->save()) {                    
+                    return redirect('home')->with('message', 'Tu Usuario: '.$user->fullname.' fue Modificado con Exito!');
+                } 
     }
 
 }
